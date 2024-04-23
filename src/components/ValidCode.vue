@@ -23,7 +23,7 @@ export default {
     createdCode () {
       let len = this.length,
           codeList = [],
-          chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz0123456789',
+          chars = 'ABCDEFGHJKMNPQRSTWXYZa bcdefhijkmnprstwxyz0123456789',
           charsLen = chars.length
       // 生成
       for (let i = 0; i < len; i++) {

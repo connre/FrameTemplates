@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from "@/router";
 
 
 const request = axios.create({
@@ -11,7 +12,9 @@ const request = axios.create({
 request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
 
-    // config.headers['token'] = 'token'
+    let  user = JSON.parse(localStorage.getItem('indexUser') || '{}')
+    config.headers['token'] = user.token
+
     return config;
 }, error => {
     console.error('request error:' + error)
@@ -25,6 +28,10 @@ request.interceptors.response.use(
         let res = response.data;
         if (typeof res === 'string') {
             res = res ? JSON.parse(res) : res
+        }
+
+        if(res.code === '401'){
+            router.push('/userLogin')
         }
         return res;
     }, error => {

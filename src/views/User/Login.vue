@@ -7,12 +7,12 @@ export default {
   },
   data() {
     // 自定义验证规则
-    const  validateCode = (rule , value , callback) =>{
-      if (value === ''){
+    const validateCode = (rule, value, callback) => {
+      if (value === '') {
         callback(new Error('请输入验证码'))
-      }else if(value.toLowerCase() !== this.code){//小写
+      } else if (value.toLowerCase() !== this.code) {//小写
         callback(new Error('验证码错误'))
-      }else{
+      } else {
         callback()
       }
     }
@@ -33,7 +33,7 @@ export default {
           {required: true, message: '请输入密码', trigger: 'blur'}
         ],
         // 自定义验规则方法
-        code:[
+        code: [
           {validator: validateCode, trigger: 'blur'}
         ]
       }
@@ -52,10 +52,12 @@ export default {
         if (valid) {
           // 验证通过
           this.$request.post('/login', this.user).then(res => {
-            if (res.code === '200'){
+            if (res.code === '200') {
               this.$router.push('/')
               this.$message.success('登录成功')
-            }else {
+              // 存储用户信息
+              localStorage.setItem('indexUser', JSON.stringify(res.data))
+            } else {
               this.$message.error(res.msg)
             }
           })
